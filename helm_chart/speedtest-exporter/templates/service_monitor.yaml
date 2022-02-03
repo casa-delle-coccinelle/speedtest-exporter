@@ -1,0 +1,17 @@
+{{- if .Values.PrometheusServiceMonitor.enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "speedtest-exporter.fullname" . }}
+  labels:
+    {{- include "speedtest-exporter.labels" . | nindent 4 }} 
+spec:
+  selector:
+    matchLabels:
+      {{- include "speedtest-exporter.selectorLabels" . | nindent 6 }}
+  endpoints:
+  - port: http
+    interval: {{ .Values.PrometheusServiceMonitor.scrapeInterval }}
+    scrapeTimeout: {{ .Values.PrometheusServiceMonitor.scrapeTimeout }}
+{{- end }}
