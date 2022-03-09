@@ -15,10 +15,13 @@ speedTestTimeout: 90
 
 speedTestDaemonSet: false
 
-PrometheusServiceMonitor:
+PrometheusMonitor:
   enabled: false
+  type: service
   scrapeInterval: 10m
   scrapeTimeout: 91s
+  annotations: {}
+  additionalLabels: {}
 
 grafanaNamespace: ""
 

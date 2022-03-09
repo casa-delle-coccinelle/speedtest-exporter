@@ -1,7 +1,7 @@
-{{- if and .Values.PrometheusMonitor.enabled ( eq .Values.PrometheusMonitor.type "service" ) }}
+{{- if and .Values.PrometheusMonitor.enabled ( eq .Values.PrometheusMonitor.type "pod" ) }}
 ---
 apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
+kind: PodMonitor
 metadata:
   {{- with .Values.PrometheusMonitor.annotations }}
   annotations:
@@ -9,7 +9,7 @@ metadata:
   {{- end }}
   name: {{ include "speedtest-exporter.fullname" . }}
   labels:
-    {{- include "speedtest-exporter.labels" . | nindent 4 }} 
+    {{- include "speedtest-exporter.labels" . | nindent 4 }}
     {{- with .Values.PrometheusMonitor.additionalLabels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -17,7 +17,7 @@ spec:
   selector:
     matchLabels:
       {{- include "speedtest-exporter.selectorLabels" . | nindent 6 }}
-  endpoints:
+  podMetricsEndpoints:
   - port: http
     interval: {{ .Values.PrometheusMonitor.scrapeInterval }}
     scrapeTimeout: {{ .Values.PrometheusMonitor.scrapeTimeout }}
