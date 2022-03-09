@@ -13,12 +13,15 @@ speedTestServer: ""
 speedTestPort: 9798
 speedTestTimeout: 90
 
+speedTestDaemonSet: false
+
 PrometheusServiceMonitor:
   enabled: false
   scrapeInterval: 10m
   scrapeTimeout: 91s
 
 grafanaNamespace: ""
+
 
 podAnnotations: {}
 

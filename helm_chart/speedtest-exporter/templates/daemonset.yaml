@@ -1,12 +1,11 @@
-{{- if not .Values.speedTestDaemonSet }}
+{{- if .Values.speedTestDaemonSet }}
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: {{ include "speedtest-exporter.fullname" . }}
   labels:
     {{- include "speedtest-exporter.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "speedtest-exporter.selectorLabels" . | nindent 6 }}
