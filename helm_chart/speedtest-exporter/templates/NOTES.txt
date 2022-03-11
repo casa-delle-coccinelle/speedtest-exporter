@@ -1,0 +1,16 @@
+===============================
+speedtest-exporter is installed in your cluster!!!
+
+-------------------------------
+
+You can check the status of the pods with:
+kubectl --namespace {{ .Release.Namespace }} get pods --selector=app.kubernetes.io/instance={{ .Release.Name }}
+
+-------------------------------
+
+Verify that metrics are available with port-forward to the service, then go to you browser and type http://localhost:{{ .Values.speedTestPort }}/metrics
+kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ include "speedtest-exporter.fullname" . }} {{ .Values.speedTestPort }}
+
+-------------------------------
+
+

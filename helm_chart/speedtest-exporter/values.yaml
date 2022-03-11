@@ -22,7 +22,7 @@ PrometheusMonitor:
   scrapeTimeout: 91s
   annotations: {}
   additionalLabels: {}
-  additionalConfig: []
+  additionalConfig: {}
 
 grafanaNamespace: ""
 
