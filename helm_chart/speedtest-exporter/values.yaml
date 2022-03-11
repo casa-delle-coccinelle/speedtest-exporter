@@ -24,6 +24,17 @@ PrometheusMonitor:
   additionalLabels: {}
   additionalConfig: {}
 
+PrometheusRules:
+  enabled: false
+  rules: []
+  jitter_threshold: ""
+  ping_threshold: ""
+  download_threshold: ""
+  upload_threshold: ""
+  period: ""
+  additionalLabels: {}
+  annotations: {}
+
 grafanaNamespace: ""
 
 

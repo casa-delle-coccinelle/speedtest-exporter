@@ -1,0 +1,62 @@
+{{- if .Values.PrometheusRules.enabled }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  {{- with .Values.PrometheusRules.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "speedtest-exporter.labels" . | nindent 4 }} 
+    {{- with .Values.PrometheusRules.additionalLabels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  name: {{ include "speedtest-exporter.fullname" . }}
+spec:
+{{- if .Values.PrometheusRules.rules }}
+  groups:
+  - name: {{ include "speedtest-exporter.name" . }}
+    rules: {{- toYaml .Values.PrometheusRules.rules | nindent 4 }}
+{{ else }}
+  groups:
+  - name: {{ include "speedtest-exporter.name" . }}
+    interval: {{ .Values.scrapeInterval }}
+    rules:
+    {{- if .Values.PrometheusRules.jitter_threshold }}
+    - expr: |
+        speedtest_jitter_latency_milliseconds > {{ .Values.PrometheusRules.jitter_threshold }}
+      alert: JitterLatencyTooHigh
+      {{- if .Values.PrometheusRules.period }}
+      for: {{ .Values.PrometheusRules.period }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.PrometheusRules.ping_threshold }}
+    - expr: |
+        speedtest_ping_latency_milliseconds > {{ .Values.PrometheusRules.ping_threshold }}
+      alert: PingLatencyTooHigh
+      {{- if .Values.PrometheusRules.period }}
+      for: {{ .Values.PrometheusRules.period }}
+      {{- end }}
+    {{- end }}
+    {{- if .Values.PrometheusRules.download_threshold }}
+    - expr: |
+        speedtest_download_bits_per_second*10^-6 < {{ .Values.PrometheusRules.download_threshold }}
+      alert: DownloadSpeedTooLow
+      {{- if .Values.PrometheusRules.period }}
+      for: {{ .Values.PrometheusRules.period }}
+      {{- end }}
+    {{- if .Values.PrometheusRules.upload_threshold }}
+    - expr: |
+        speedtest_upload_bits_per_second*10^-6 < {{ .Values.PrometheusRules.upload_threshold }}
+      alert: UploadSpeedTooLow
+      {{- if .Values.PrometheusRules.period }}
+      for: {{ .Values.PrometheusRules.period }}
+      {{- end }}
+    {{- end }}
+    {{- end }}
+{{ end }}
+{{- end }}
+
+
+
