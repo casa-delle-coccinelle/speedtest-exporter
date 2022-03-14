@@ -13,4 +13,23 @@ kubectl --namespace {{ .Release.Namespace }} port-forward service/{{ include "sp
 
 -------------------------------
 
+{{- if and .Values.PrometheusMonitor.enabled ( eq .Values.PrometheusMonitor.type "service" ) }}
+Check Prometheus service monitor configuration with:
+kubectl --namespace {{ .Release.Namespace }} get servicemonitors {{ include "speedtest-exporter.fullname" . }} -o yaml
 
+-------------------------------
+{{- end }}
+ 
+{{- if and .Values.PrometheusMonitor.enabled ( eq .Values.PrometheusMonitor.type "pod" ) }}
+Check Prometheus pod monitor configuration with:
+kubectl --namespace {{ .Release.Namespace }} get podmonitors {{ include "speedtest-exporter.fullname" . }} -o yaml
+
+-------------------------------
+{{- end }}
+
+{{- if .Values.PrometheusRules.enabled }}
+Check Prometheus rules configuration with:
+kubectl --namespace {{ .Release.Namespace }} get prometheusrules {{ include "speedtest-exporter.fullname" . }} -o yaml
+
+-------------------------------
+{{- end }}
