@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "required": [
+    "PrometheusMonitor"
+  ],
+  "properties": {
+    "PrometheusMonitor": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "pattern": "^(service|pod)$"
+        }
+      }
+    }
+  }
+}

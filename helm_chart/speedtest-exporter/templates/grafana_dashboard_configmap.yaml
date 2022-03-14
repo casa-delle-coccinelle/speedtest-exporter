@@ -1,0 +1,12 @@
+{{- if .Values.grafanaNamespace }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "speedtest-exporter.fullname" . }}
+  namespace: {{ .Values.grafanaNamespace }}
+  labels:
+    grafana_dashboard: "1"
+data:
+{{ (.Files.Glob "grafana_dashboard/speed-test-exporter.json").AsConfig | indent 4 }}
+{{- end }}
