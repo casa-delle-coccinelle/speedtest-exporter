@@ -22,6 +22,15 @@ Helm chart which installs speedtest-exporter app in Kubernetes cluster (https://
 | PrometheusMonitor.annotations | Annotations to be added to the CRD | {} | No | 0.0.1 |
 | PrometheusMonitor.additionalLabels | Additional labels to be added to the CRD | {} | No | 0.0.1 |
 | PrometheusMonitor.additionalConfig | Additional configuration for the CRD. Will be added as is to .spec.endpoints[] or .spec.podMetricsEndpoints[] respectively (reference https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/servicemonitor-monitoring-coreos-com-v1.html and https://docs.openshift.com/container-platform/4.6/rest_api/monitoring_apis/podmonitor-monitoring-coreos-com-v1.html)| [] | No | 0.0.1 |
+| PrometheusRules.enabled | If true PrometheusRule resource will be added | false | No | 0.0.1 |
+| PrometheusRules.rules | PrometheusRule definition. | [] | Yes, if PrometheusRules.enabled is true and no threshold are defined | 0.0.1 |
+| PrometheusRules.jitter_threshold | Jitter threshold in ms. Can be used instead of defining PrometheusRules.rules, it will create a simple prometheus rule. | "" | Yes, if PrometheusRules.enabled is true and no rules are defined | 0.0.1 |
+| PrometheusRules.ping_threshold | Ping threshold in ms. Can be used instead of defining PrometheusRules.rules, it will create a simple prometheus rule. | "" | Yes, if PrometheusRules.enabled is true and no rules are defined | 0.0.1 |
+| PrometheusRules.download_threshold | Download speed threshold in Mbit/s. Can be used instead of defining PrometheusRules.rules, it will create a simple prometheus rule.  | "" | Yes, if PrometheusRules.enabled is true and no rules are defined | 0.0.1 |
+| PrometheusRules.upload_threshold | Upload speed threshold in Mbit/s. Can be used instead of defining PrometheusRules.rules, it will create a simple prometheus rule. | "" | Yes, if PrometheusRules.enabled is true and no rules are defined | 0.0.1 |
+| PrometheusRules.period | The value will be set to "for" parameter of the PrometheusRule resource | "" | No | 0.0.1 |
+| PrometheusRules.additionalLabels | Additional labels to be added to the CRD | {} | No | 0.0.1 |
+| PrometheusRules.annotations | Annotations to be added to the CRD | {} | No | 0.0.1 |
 | grafanaNamespace | If defined a configmap with grafana dashboard will be created in this namespace | "" | No | 0.0.1 |
 | podAnnotations | k8s annotations to be added to the pods |{} | No | 0.0.1 |
 | podSecurityContext | Pod security context | {} | No | 0.0.1 |
